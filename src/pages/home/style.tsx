@@ -45,5 +45,17 @@ export const styles = StyleSheet.create({
     padding: 24,
     paddingBottom: 150
   },
+  searchArea:{
+    height:50,
+    justifyContent: 'center',
+    marginBottom:36,
+  },
+  search:{
+    backgroundColor:"#F8F8F6",
+    padding: 10,
+    borderWidth: 1,
+    borderRadius:6,
+    borderColor:'#9B9B9B',
+  }
   
 });

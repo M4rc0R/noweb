@@ -1,7 +1,8 @@
 import React from 'react';
-import { useCallback, useState } from 'react';
-import { FlatList, Text, View, Image } from 'react-native';
+import { useCallback, useState, useEffect } from 'react';
+import { FlatList, Text, View, Image, TextInput } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { Card, CardProps } from '../../components/Card';
 
@@ -13,6 +14,7 @@ import { HeaderHome } from '../../components/HeaderHome';
 
 export function Home() {
   const [data, setData] = useState<CardProps[]>([]);
+  const [searchText, setSearchText] = useState('');
 
   const { getItem, setItem } = useAsyncStorage("@savepass:passwords");
 
@@ -36,10 +38,41 @@ export function Home() {
   }, []));
 
 
+  useEffect(()=>{
+    if(searchText === ''){
+      setData(data);
+    }else{
+      setData(
+        data.filter((item)=>{
+          if(item.name.indexOf(searchText)> -1){
+            return true;
+          }else{
+            return false;
+          }
+        })
+      );
+    }
+  },[searchText])
+
+
   return (
     <View style={styles.container}>
 
       <View style={styles.homeContent}>
+
+        <View style={styles.searchArea}>
+        
+        <TextInput
+        style={styles.search}
+        placeholder='Buscar Projeto'
+        placeholderTextColor={'#888'}
+        value={searchText}
+        onChangeText={(t) => setSearchText(t)}
+        >
+        </TextInput>
+        
+        </View>
+
         <Text style={{fontSize:30, fontWeight:'600'}}>Olá</Text>
         <Text  style={{fontSize:26, fontWeight:'400'}}>Kathryn</Text>
       
